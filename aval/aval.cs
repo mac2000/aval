@@ -70,7 +70,7 @@ class aval
         try
         {
             prev = File.ReadAllText(prev_txt).Trim();
-            log(string.Format("prev username: {0}", prev));
+            log(string.Format("prev: {0}", prev));
         }
         catch (Exception) { }
         #endregion
@@ -155,7 +155,7 @@ class aval
                             DateTime d = DateTime.ParseExact(m.Groups["date"].Value, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                             Decimal amount = Decimal.Parse(m.Groups["amount"].Value, NumberStyles.Currency, new NumberFormatInfo() { NumberDecimalSeparator = "." });
                             string currency = m.Groups["currency"].Value;
-                            string company = m.Groups["company"].Value;                        
+                            string company = m.Groups["company"].Value;
                         }*/
 
                         File.WriteAllText(prev_txt, available);
@@ -164,7 +164,7 @@ class aval
                         if (prev != available || sendmail == true)
                         {
                             log("[*] Sending mail");
-                            string subject = string.Format("[aval] {0}", available);
+                            string subject = string.Format("[aval{1}] {0}", available, sendmail == true ? ":daily" : string.Empty);
                             string body = string.Format("<h3>{0}</h3>{1}", available, report);
                             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
                             smtp.EnableSsl = true;
